@@ -4,109 +4,97 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TravelGo - Login</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      min-height: 100vh;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1650&q=80') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
     .form-container {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 40px 30px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
       border-radius: 16px;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+      padding: 40px 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
       width: 100%;
       max-width: 400px;
       text-align: center;
-      backdrop-filter: blur(10px);
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .form-container h2 {
       margin-bottom: 24px;
-      color: #5a3ea1;
-      font-size: 28px;
-    }
-
-    .input-group {
-      position: relative;
-      margin: 15px 0;
-    }
-
-    .input-group i {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      color: #888;
+      color: #004aad;
+      font-weight: bold;
     }
 
     input {
-      width: 100%;
-      padding: 12px 12px 12px 40px;
+      width: 90%;
+      padding: 14px;
+      margin: 10px 0;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 16px;
-      transition: border-color 0.3s;
+      transition: 0.3s ease;
     }
 
     input:focus {
-      border-color: #5a3ea1;
+      border-color: #004aad;
       outline: none;
+      box-shadow: 0 0 8px rgba(0, 74, 173, 0.3);
     }
 
     button {
       width: 100%;
-      padding: 12px;
-      background: linear-gradient(90deg, #5a3ea1, #764ba2);
+      padding: 14px;
+      background-color: #004aad;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
-      margin-top: 20px;
+      margin-top: 10px;
       transition: background 0.3s ease;
     }
 
     button:hover {
-      background: linear-gradient(90deg, #4a2f8c, #6533a2);
+      background-color: #023e8a;
     }
 
     p {
-      margin-top: 18px;
+      margin-top: 16px;
       font-size: 14px;
-      color: #444;
+      color: #555;
     }
 
     a {
-      color: #5a3ea1;
+      color: #004aad;
       font-weight: bold;
       text-decoration: none;
+      transition: color 0.3s;
     }
 
     a:hover {
       text-decoration: underline;
+      color: #023e8a;
     }
 
-    .error {
-      margin-top: 12px;
-      color: #e63946;
+    .error-message {
+      color: red;
+      margin-top: 10px;
       font-size: 14px;
-    }
-
-    @media screen and (max-width: 480px) {
-      .form-container {
-        padding: 30px 20px;
-      }
     }
   </style>
 </head>
@@ -114,18 +102,12 @@
   <div class="form-container">
     <h2>Login to TravelGo</h2>
     <form method="POST" action="/login">
-      <div class="input-group">
-        <i class="fas fa-envelope"></i>
-        <input type="email" name="email" placeholder="Enter your email" required>
-      </div>
-      <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input type="password" name="password" placeholder="Enter your password" required>
-      </div>
+      <input type="email" name="email" placeholder="Enter your email" required>
+      <input type="password" name="password" placeholder="Enter your password" required>
       <button type="submit">Login</button>
     </form>
     {% if message %}
-      <div class="error">{{ message }}</div>
+      <p class="error-message">{{ message }}</p>
     {% endif %}
     <p>Don't have an account? <a href="{{ url_for('register') }}">Register Here</a></p>
   </div>
