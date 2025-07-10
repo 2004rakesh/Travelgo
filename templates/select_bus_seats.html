@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Select Seats - TravelGo</title>
+  <title>Select Bus Seats - TravelGo</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -26,20 +26,20 @@
     }
 
     form {
-      max-width: 400px;
-      margin: auto;
+      max-width: 500px;
+      margin: 0 auto;
       background: white;
       padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     }
 
     .seat-map {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      gap: 12px;
       justify-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .seat {
@@ -53,19 +53,19 @@
       font-weight: 500;
       cursor: pointer;
       user-select: none;
-      transition: all 0.2s ease;
+      transition: background-color 0.2s ease;
     }
 
     .seat:hover {
       background: #b8d6ff;
     }
 
-    .selected {
+    .seat.selected {
       background: #004aad;
       color: white;
     }
 
-    .booked {
+    .seat.booked {
       background: #999;
       color: white;
       pointer-events: none;
@@ -81,7 +81,7 @@
       font-size: 16px;
       border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
@@ -96,10 +96,14 @@
   </style>
 </head>
 <body>
-  <h2>Select Your Seats</h2>
-  <div class="info">You can select <strong>{{ booking.num_persons }}</strong> seat(s)</div>
 
-  <form method="POST" action="{{ url_for('final_confirm_bus_booking') }}" onsubmit="return validateSeats()">
+  <h2>Select Your Seats</h2>
+  <div class="info">
+    You can select <strong>{{ booking.num_persons }}</strong> seat(s)
+  </div>
+
+  <form method="POST" action="{{ url_for('final_confirm_booking') }}" onsubmit="return validateSeats()">
+
     <div class="seat-map" id="seat-map">
       {% for seat in all_seats %}
         <div class="seat {% if seat in booked_seats %}booked{% endif %}" 
@@ -116,19 +120,21 @@
     const maxSeats = {{ booking.num_persons }};
     const selected = [];
 
-    function selectSeat(elem) {
-      if (elem.classList.contains('booked')) return;
+    function selectSeat(el) {
+      if (el.classList.contains('booked')) return;
 
-      const seat = elem.getAttribute('data-seat');
+      const seat = el.getAttribute('data-seat');
 
-      if (elem.classList.contains('selected')) {
-        elem.classList.remove('selected');
+      if (el.classList.contains('selected')) {
+        el.classList.remove('selected');
         selected.splice(selected.indexOf(seat), 1);
-      } else if (selected.length < maxSeats) {
-        elem.classList.add('selected');
-        selected.push(seat);
       } else {
-        alert(`You can only select ${maxSeats} seat(s).`);
+        if (selected.length >= maxSeats) {
+          alert(`You can only select ${maxSeats} seat(s).`);
+          return;
+        }
+        el.classList.add('selected');
+        selected.push(seat);
       }
 
       document.getElementById('selected-seats').value = selected.join(',');
@@ -142,5 +148,6 @@
       return true;
     }
   </script>
+
 </body>
 </html>
