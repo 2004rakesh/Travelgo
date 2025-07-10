@@ -1,230 +1,239 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Confirm Train Booking - TravelGo</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: #f3f8ff;
-            color: #333;
-        }
+  <meta charset="UTF-8">
+  <title>Confirm Train Booking - TravelGo</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+    }
 
-        header {
-            background-color: #004aad;
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.65);
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+    }
 
-        header h1 {
-            font-size: 26px;
-            margin: 0;
-        }
+    header {
+      background-color: rgba(0, 123, 255, 0.95);
+      color: white;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        header nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
 
-        header nav a:hover {
-            color: #ffdd57;
-        }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 15px;
+      transition: opacity 0.3s;
+    }
 
-        .container {
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 30px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            text-align: center;
-        }
+    nav a:hover {
+      opacity: 0.8;
+    }
 
-        .container h2 {
-            color: #004aad;
-            margin-bottom: 30px;
-            font-size: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .container {
+      background: #ffffffee;
+      padding: 30px;
+      max-width: 800px;
+      margin: 50px auto;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.6s ease;
+    }
 
-        .container h2 i {
-            margin-right: 10px;
-        }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 25px;
+    }
 
-        .booking-summary {
-            text-align: left;
-            margin-bottom: 30px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
+    .summary {
+      line-height: 1.8;
+      font-size: 17px;
+      color: #333;
+    }
 
-        .booking-summary p {
-            margin: 8px 0;
-            font-size: 1.1em;
-            color: #555;
-        }
+    .summary strong {
+      color: #000;
+    }
 
-        .booking-summary p strong {
-            color: #004aad;
-        }
+    .btn-container {
+      margin-top: 30px;
+      text-align: center;
+    }
 
-        .booking-summary .total-price {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #28a745;
-            margin-top: 20px;
-            border-top: 1px dashed #ccc;
-            padding-top: 15px;
-        }
+    button {
+      background-color: #007bff;
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+    }
 
-        .buttons-container button {
-            background-color: #28a745;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin: 0 10px;
-        }
+    button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
 
-        .buttons-container button:hover {
-            background-color: #218838;
-        }
+    .message-box {
+      display: none;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      font-size: 15px;
+    }
 
-        .buttons-container a {
-            background-color: #6c757d;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-size: 1.1em;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
+    .message-box.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
 
-        .buttons-container a:hover {
-            background-color: #5a6268;
-        }
+    .message-box.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
 
-        footer {
-            background-color: #003380;
-            color: white;
-            text-align: center;
-            padding: 20px 40px;
-            font-size: 0.9em;
-            margin-top: 50px;
-        }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.85);
+      color: #333;
+      font-size: 14px;
+    }
 
-        /* Styles for custom message box */
-        .message-box {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            display: none; /* Hidden by default */
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .message-box.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .message-box.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-    </style>
+    @media (max-width: 600px) {
+      .container {
+        margin: 30px 15px;
+        padding: 20px;
+      }
+
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      nav a {
+        margin: 10px 10px 0 0;
+        display: inline-block;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="overlay">
     <header>
-        <h1>TravelGo</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/logout">Logout</a>
-        </nav>
+      <h1>TravelGo</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+      </nav>
     </header>
 
     <div class="container">
-        <h2><i class="fas fa-check-circle"></i> Confirm Train Booking</h2>
-        <div id="messageBox" class="message-box" role="alert"></div>
+      <h2>✅ Confirm Train Booking</h2>
 
-        <div class="booking-summary">
-            <h3>Booking Details:</h3>
-            <p><strong>Train Name:</strong> {{ booking.name }} ({{ booking.train_number }})</p>
-            <p><strong>Route:</strong> {{ booking.source }} to {{ booking.destination }}</p>
-            <p><strong>Date:</strong> {{ booking.travel_date }}</p>
-            <p><strong>Departure:</strong> {{ booking.departure_time }} <strong>Arrival:</strong> {{ booking.arrival_time }}</p>
-            <p><strong>Type:</strong> {{ booking.train_type }}</p>
-            <p><strong>Passengers:</strong> {{ booking.num_persons }}</p>
-            <p class="total-price">Total Price: ₹{{ "{:,.2f}".format(booking.total_price) }}</p>
-        </div>
+      <div id="messageBox" class="message-box" role="alert"></div>
 
-        <div class="buttons-container">
-            <button id="confirmBookingBtn">Confirm Booking</button>
-            <a href="/train" class="btn btn-secondary">Go Back to Search</a>
-        </div>
+      <div class="summary">
+        <p><strong>Train:</strong> {{ booking.name }} ({{ booking.train_number }})</p>
+        <p><strong>From:</strong> {{ booking.source }} → <strong>To:</strong> {{ booking.destination }}</p>
+        <p><strong>Date:</strong> {{ booking.date }}</p>
+        <p><strong>Departure:</strong> {{ booking.departure_time }} | <strong>Arrival:</strong> {{ booking.arrival_time }}</p>
+        <p><strong>Coach:</strong> {{ booking.coach }}</p>
+        <p><strong>Passengers:</strong> {{ booking.persons }}</p>
+        <p><strong>Selected Seats:</strong> {{ booking.seats | join(', ') }}</p>
+        <p><strong>Total Price:</strong> ₹{{ booking.total_price }}</p>
+      </div>
+
+      <div class="btn-container">
+        <button id="confirmBtn">Confirm Booking</button>
+      </div>
     </div>
 
     <footer>
-        &copy; 2025 TravelGo. All rights reserved.
+      &copy; 2025 TravelGo. All rights reserved.
     </footer>
+  </div>
 
-    <script>
-        function showMessage(message, type = 'error', redirectUrl = null) {
-            const messageBox = document.getElementById('messageBox');
-            messageBox.textContent = message;
-            messageBox.className = `message-box ${type}`;
-            messageBox.style.display = 'block';
+  <script>
+    const booking = {
+      name: "{{ booking.name }}",
+      train_number: "{{ booking.train_number }}",
+      source: "{{ booking.source }}",
+      destination: "{{ booking.destination }}",
+      date: "{{ booking.date }}",
+      coach: "{{ booking.coach }}",
+      departure_time: "{{ booking.departure_time }}",
+      arrival_time: "{{ booking.arrival_time }}",
+      price: parseFloat("{{ booking.price }}"),
+      persons: parseInt("{{ booking.persons }}", 10),
+      seats: "{{ booking.seats | join(',') }}".split(','),
+      total_price: parseFloat("{{ booking.total_price }}")
+    };
 
-            if (redirectUrl) {
-                setTimeout(() => {
-                    window.location.href = redirectUrl;
-                }, 2000);
-            } else {
-                setTimeout(() => {
-                    messageBox.style.display = 'none';
-                }, 3000);
-            }
-        }
+    function showMessage(msg, type = 'error', redirect = null) {
+      const box = document.getElementById('messageBox');
+      box.textContent = msg;
+      box.className = `message-box ${type}`;
+      box.style.display = 'block';
 
-        document.getElementById('confirmBookingBtn').addEventListener('click', async function() {
-            try {
-                const response = await fetch('/final_confirm_train_booking', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({})
-                });
+      if (redirect) {
+        setTimeout(() => {
+          window.location.href = redirect;
+        }, 2500);
+      } else {
+        setTimeout(() => {
+          box.style.display = 'none';
+        }, 3000);
+      }
+    }
 
-                const result = await response.json();
-
-                if (result.success) {
-                    showMessage(result.message, 'success', result.redirect);
-                } else {
-                    showMessage(result.message, 'error', result.redirect);
-                }
-            } catch (error) {
-                console.error('Error confirming booking:', error);
-                showMessage('An error occurred while confirming your booking. Please try again.', 'error');
-            }
+    document.getElementById('confirmBtn').addEventListener('click', async () => {
+      try {
+        const res = await fetch('/final_confirm_train_booking', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(booking)
         });
-    </script>
+
+        const result = await res.json();
+        if (result.success) {
+          showMessage(result.message || 'Booking successful!', 'success', result.redirect);
+        } else {
+          showMessage(result.message || 'Booking failed.', 'error');
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        showMessage('An error occurred while confirming your booking.', 'error');
+      }
+    });
+  </script>
 </body>
 </html>
